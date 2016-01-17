@@ -9,7 +9,7 @@ include mk/arm.mk
 
 GDB = $(TC)-gdb
 
-all: main
+all: src/main
 
 main: LDFLAGS+= -Wl,-Map=src/main.map
 src/main: src/main.o

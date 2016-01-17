@@ -11,20 +11,20 @@
   bf_func_name(bits, value_mask)(width)
 
 // return bit pattern of 'width' 1's at bit offset of 'offset'
-#define bf_mask(bits, width, offset) \
-  bf_func_name(bits, mask)(width, offset)
+#define bf_mask(bits, offset, width) \
+  bf_func_name(bits, mask)(offset, width)
 
 // return value with set fitfield value
-#define bf_value(bits, width, offset, val) \
-  bf_func_name(bits, value)(width, offset, val)
+#define bf_val(bits, vval, offset, width) \
+  bf_func_name(bits, val)(vval, offset, width)
 
 // return value of the bit field from 'src'
-#define bf_get(bits, width, offset, src) \
-  bf_func_name(bits, get)(width, offset, src)
+#define bf_get(bits, src, offset, width) \
+  bf_func_name(bits, get)(src, offset, width)
 
 // return 'src' with set bitfield value
-#define bf_set(bits, width, offset, src, val) \
-  bf_func_name(bits, set)(width, offset, src, val)
+#define bf_set(bits, src, val, offset, width) \
+  bf_func_name(bits, set)(src, val, offset, width)
 
 #define bf_type_bits 8
 #include <bitfield_defs.h>
@@ -34,5 +34,31 @@
 
 #define bf_type_bits 32
 #include <bitfield_defs.h>
+
+#define bf_reg_funcs(bits, name, width, offset) \
+  inline uint ## bits ## _t \
+  name ## _value_mask() { \
+    return bf_value_mask(bits, width); \
+  } \
+  \
+  inline uint ## bits ## _t \
+  name ## _mask() { \
+    return bf_mask(bits, offset, width); \
+  } \
+  \
+  inline uint ## bits ## _t \
+  name ## _val(uint ## bits ## _t val) { \
+    return bf_val(bits, val, offset, width);  \
+  } \
+  \
+  inline uint ## bits ## _t \
+  name ## _get(uint ## bits ## _t src) { \
+    return bf_get(bits, src, offset, width); \
+  } \
+  \
+  inline uint ## bits ## _t \
+  name ## _set(uint ## bits ## _t src, uint ## bits ## _t val) {\
+    return bf_set(bits, src, val, offset, width); \
+  }
 
 #endif /* _BITFIELD_H */

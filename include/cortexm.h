@@ -25,18 +25,10 @@
 
 #include <armv7m.h>
 
-struct SCB_ACTLR_t {
-  uint32_t            : 22;
-  uint32_t DISOOFP    : 1;
-  uint32_t DISFPCA    : 1;
-  uint32_t            : 5;
-  uint32_t DISFOLD    : 1;
-  uint32_t DISDEFWBUF : 1;
-  uint32_t DISMCYCINT : 1;
-} __attribute__((packed));
-typedef struct SCB_ACTLR_t SCB_ACTLR_t;
+bf_reg_funcs(32, SCB_ACTLR_DISOOFP,    9, 1)
+bf_reg_funcs(32, SCB_ACTLR_DISFPCA,    8, 1)
+bf_reg_funcs(32, SCB_ACTLR_DISFOLD,    2, 1)
+bf_reg_funcs(32, SCB_ACTLR_DISDEFWBUF, 1, 1)
+bf_reg_funcs(32, SCB_ACTLR_DISMCYCINT, 0, 1)
 
-extern volatile SCB_ACTLR_t
-SCB_ACTLR;
-
-#endif /* _CORTEXM_H */
+#endif // _CORTEXM_H
