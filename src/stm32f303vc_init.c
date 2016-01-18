@@ -11,28 +11,29 @@ low_level_init() {
 static void
 cinit() {
 
-  register size_t i;
+  uint32_t *s;
+  uint32_t *d;
 
   // relocate .text.ccm
-  for(i = 0; i < text_ccm_size / sizeof(text_ccm_dst[0]); ++i) {
-
-    text_ccm_dst[i] = text_ccm_src[i];
-
+  s = text_ccm_src;
+  d = text_ccm_dst;
+  while(d < text_ccm_end) {
+    *(d++) = *(s++);
   }
 
   // relocate .data
-  for(i = 0; i < data_size / sizeof(data_dst[0]); ++i) {
-
-    data_dst[i] = data_src[i];
-
+  s = data_src;
+  d = data_dst;
+  while(d < data_end) {
+    *(d++) = *(s++);
   }
 
   // init bss section
-  for(i = 0; i < bss_size / sizeof(bss_start[0]); ++i) {
-
-    bss_start[i] = 0;
-
+  d = bss_start;
+  while(d < bss_end) {
+    *(d++) = 0;
   }
+
 
 }
 
@@ -43,13 +44,13 @@ vtable_relocation() {
   register uint32_t *d;
 
   // relocate vector table
-  for(s = vtable_ccm_src, d = vtable_ccm_dst; d < vtable_ccm_end; ++s, ++d) {
-
-    *s = *d;
-
+  s = vtable_src;
+  d = vtable_dst;
+  while(d < vtable_end) {
+    *(d++) = *(s++);
   }
 
-  SCB_VTOR = vtable_ccm_dst;
+  SCB_VTOR = vtable_dst;
 
 }
 

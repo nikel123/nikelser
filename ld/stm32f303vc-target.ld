@@ -10,15 +10,15 @@ ENTRY(Reset_ISR)
 
 SECTIONS {
 
-  .vtable_ccm : ALIGN(512) {
+  .vtable : ALIGN(512) {
 
-    vtable_ccm_src = LOADADDR(.vtable_ccm);
-    vtable_ccm_dst = .;
+    vtable_src = LOADADDR(.vtable);
+    vtable_dst = .;
 
-    KEEP(*(.vtable_ram))
+    KEEP(*(.vtable))
 
     . = ALIGN(4);
-    vtable_ccm_end = .;
+    vtable_end = .;
 
   } >CCM AT>FLASH
 
@@ -31,7 +31,7 @@ SECTIONS {
     *(.text.ccm)
 
     . = ALIGN(4);
-    text_ccm_size = . - text_ccm_dst;
+    text_ccm_end = .;
 
   } >CCM AT>FLASH
 
@@ -59,7 +59,7 @@ SECTIONS {
     *(.dada*)
 
     . = ALIGN(4);
-    data_size = . - data_dst;
+    data_end = .;
 
   } >RAM AT>FLASH
 
@@ -71,7 +71,7 @@ SECTIONS {
     *(.bss*)
 
     . = ALIGN(4);
-    bss_size = . - bss_start;
+    bss_end = .;
 
   } >RAM
 

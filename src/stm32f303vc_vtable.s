@@ -2,7 +2,6 @@
 .thumb
 
 .global stack_size
-.global vtable
 
 .macro def_isr name
   .word \name\()_ISR
@@ -12,6 +11,7 @@
 
 .section .vtable,"a",%progbits
 
+  .global vtable
   .type vtable, %object
 
 vtable:

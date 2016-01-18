@@ -9,23 +9,23 @@
 #include <stddef.h>
 
 extern uint32_t * const
-vtable_ccm_src;
+vtable_src;
 
 extern uint32_t * const
-vtable_ccm_dst;
+vtable_dst;
 
 extern uint32_t * const
-vtable_ccm_end;
+vtable_end;
 
 
 extern uint32_t * const
 text_ccm_src;
 
-extern uint32_t * const 
+extern uint32_t * const
 text_ccm_dst;
 
-extern const size_t
-text_ccm_size;
+extern uint32_t * const
+text_ccm_end;
 
 
 extern uint32_t * const
@@ -34,15 +34,15 @@ data_dst;
 extern uint32_t * const
 data_src;
 
-extern const size_t
-data_size;
+extern uint32_t * const
+data_end;
 
 
 extern uint32_t * const
 bss_start;
 
-extern const size_t
-bss_size;
+extern uint32_t * const
+bss_end;
 
 
 extern const void *
