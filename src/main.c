@@ -1,6 +1,6 @@
 #include <armv7m.h>
 
-int
+int __attribute__((noreturn))
 main() {
 
   int i = 0;

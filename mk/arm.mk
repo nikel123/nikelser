@@ -9,11 +9,13 @@ AR = $(TC)-ar
 OBJCOPY = $(TC)-objcopy
 OBJDUMP = $(TC)-objdump
 
-LDSCRIPT ?= $(TARGET)
+LDSCRIPT ?= $(TARGET)-target
 
 CFLAGS += $(MCU) $(FPU)
-LDFLAGS +=  $(MCU) $(FPU) -Tld/$(LDSCRIPT).ld \
-            -Xlinker --gc-sections
+LDFLAGS += \
+  $(MCU) $(FPU) \
+  -Tld/$(LDSCRIPT).ld \
+  -Xlinker --gc-sections
 
 ifndef TARGET
 $(error "Please define TARGET")

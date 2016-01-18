@@ -2,7 +2,7 @@
  * (c) Andrej Gelenberg <andrej.gelenberg@udo.edu> 2013-2016
  */
 
-INCLUDE arm_cm4.ld
+INCLUDE armv7m.ld
 
 FLASH_BASE    = 0x40022000;
 FLASH_ACR     = FLASH_BASE;

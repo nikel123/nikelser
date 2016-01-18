@@ -1,1 +1,5 @@
 config.mk
+*.d
+*.o
+src/main
+.*.swp
