@@ -20,13 +20,13 @@
 
 /*
  uint<bits>_t
- bf<bits>_value_mask(
+ bf<bits>_val_mask(
      uint8_t width)
 
   return value bit mask for given width of a bitfield
 */
 inline bf_def_type
-bf_def_func_name(value_mask)(
+bf_def_func_name(val_mask)(
     uint8_t width) {
   return (1 << width) - 1;
 }
@@ -43,7 +43,7 @@ inline bf_def_type
 bf_def_func_name(mask)(
     uint8_t offset,
     uint8_t width) {
-  return bf_def_func_name(value_mask)(width) << offset;
+  return bf_def_func_name(val_mask)(width) << offset;
 }
 
 /*
@@ -60,7 +60,7 @@ bf_def_func_name(get)(
     bf_def_type src,
     uint8_t     offset,
     uint8_t     width) {
-  return (src >> offset) & bf_def_func_name(value_mask)(width);
+  return (src >> offset) & bf_def_func_name(val_mask)(width);
 }
 
 /*
@@ -77,7 +77,7 @@ bf_def_func_name(val)(
     bf_def_type val,
     uint8_t     offset,
     uint8_t     width) {
-  return (val & bf_def_func_name(value_mask)(width)) << offset;
+  return (val & bf_def_func_name(val_mask)(width)) << offset;
 }
 
 /*

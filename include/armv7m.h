@@ -59,13 +59,20 @@ bf_reg_funcs(32, FPSCR_IOC,    0, 1)
 
 // System Control Block type definitions
 
+inline volatile uint32_t *
+SCB_ACTLR() {
+  return (volatile uint32_t *)0xE000E008;
+}
+
 bf_reg_funcs(32, SCB_CPUID_IMPLEMENTER, 24,  8)
 bf_reg_funcs(32, SCB_CPUID_VARIANT,     20,  4)
 bf_reg_funcs(32, SCB_CPUID_PARTNO,       4, 12)
 bf_reg_funcs(32, SCB_CPUID_REVISION,     0,  4)
 
-extern const uint32_t
-SCB_CPUID;
+inline volatile uint32_t *
+SCB_CPUID() {
+  return (volatile uint32_t*)0xE000ED00;
+}
 
 bf_reg_funcs(32, SCB_ICSR_NMIPENDSET, 31, 1)
 bf_reg_funcs(32, SCB_ICSR_PENDSVSET,  28, 1)
@@ -78,14 +85,10 @@ bf_reg_funcs(32, SCB_ICSR_VECTPENDING,12, 9)
 bf_reg_funcs(32, SCB_ICSR_RETTOBASE,  11, 1)
 bf_reg_funcs(32, SCB_ICSR_VECTACTIVE,  0, 9)
 
-extern volatile uint32_t
-SCB_ICSR;
-
-extern volatile void *
-SCB_VTOR;
-
-extern volatile uint32_t
-SCB_ACTLR;
+inline volatile uint32_t *
+SCB_ICSR() {
+  return (volatile uint32_t *)0xE000ED04;
+}
 
 bf_reg_funcs(32, SCB_AIRCR_VECTKEY,     16, 16)
 bf_reg_funcs(32, SCB_AIRCR_VECTKEYSTAT, 16, 16)
@@ -95,15 +98,19 @@ bf_reg_funcs(32, SCB_AIRCR_SYSRESETREQ,  2,  1)
 bf_reg_funcs(32, SCB_AIRCR_VECTCLRACTIVE,1,  1)
 bf_reg_funcs(32, SCB_AIRCR_VECTRESET,    0,  1)
 
-extern volatile uint32_t
-SCB_AIRCR;
+inline volatile uint32_t *
+SCB_AIRCR() {
+  return (volatile uint32_t *)0xE000ED0C;
+}
 
 bf_reg_funcs(32, SCB_SCR_SEVONPEND,   4, 1)
 bf_reg_funcs(32, SCB_SCR_SLEEPDEEP,   2, 1)
 bf_reg_funcs(32, SCB_SCR_SLEEPONEXIT, 1, 1)
 
-extern volatile uint32_t
-SCB_SCR;
+inline volatile uint32_t *
+SCB_SCR() {
+  return (volatile uint32_t *)0xE000ED10;
+}
 
 bf_reg_funcs(32, SCB_CCR_STKALIGN,       9, 1)
 bf_reg_funcs(32, SCB_CCR_BFHFNMIGN,      8, 1)
@@ -112,44 +119,10 @@ bf_reg_funcs(32, SCB_CCR_UNALIGN_TRP,    3, 1)
 bf_reg_funcs(32, SCB_CCR_USERSETMPEND,   1, 1)
 bf_reg_funcs(32, SCB_CCR_NONBASETHRDENA, 0, 1)
 
-extern volatile uint32_t
-SCB_CCR;
-
-extern volatile uint8_t
-SCB_SHPR1_PRI_7;
-
-extern volatile uint8_t
-SCB_SHPR1_PRI_6;
-
-extern volatile uint8_t
-SCB_SHPR1_PRI_5;
-
-extern volatile uint8_t
-SCB_SHPR1_PRI_4;
-
-extern volatile uint8_t
-SCB_SHPR2_PRI_11;
-
-extern volatile uint8_t
-SCB_SHPR2_PRI_10;
-
-extern volatile uint8_t
-SCB_SHPR2_PRI_9;
-
-extern volatile uint8_t
-SCB_SHPR2_PRI_8;
-
-extern volatile uint8_t
-SCB_SHPR3_PRI_15;
-
-extern volatile uint8_t
-SCB_SHPR3_PRI_14;
-
-extern volatile uint8_t
-SCB_SHPR3_PRI_13;
-
-extern volatile uint8_t
-SCB_SHPR3_PRI_12;
+inline volatile uint32_t *
+SCB_CCR() {
+  return (volatile uint32_t *)0xE000ED14;
+}
 
 bf_reg_funcs(32, SCB_SHCSR_USGFAULTENA,    18, 1)
 bf_reg_funcs(32, SCB_SHCSR_BUSFAULTENA,    17, 1)
@@ -166,8 +139,10 @@ bf_reg_funcs(32, SCB_SHCSR_USGFAULTACT,     3, 1)
 bf_reg_funcs(32, SCB_SHCSR_BUSFAULTACT,     1, 1)
 bf_reg_funcs(32, SCB_SHCSR_MEMFAULTACT,     0, 1)
 
-extern volatile uint32_t
-SCB_SHCSR;
+inline volatile uint32_t *
+SCB_SHCSR() {
+  return (volatile uint32_t *)0xE000ED24;
+}
 
 bf_reg_funcs(8, SCB_CFSR_MMFSR_MMARVALID, 7, 1)
 bf_reg_funcs(8, SCB_CFSR_MMFSR_MLSPERR,   5, 1)
@@ -176,8 +151,10 @@ bf_reg_funcs(8, SCB_CFSR_MMFSR_MUNSTKER,  3, 1)
 bf_reg_funcs(8, SCB_CFSR_MMFSR_DACCVIOL,  1, 1)
 bf_reg_funcs(8, SCB_CFSR_MMFSR_IACCVIOL,  0, 1)
 
-extern volatile uint16_t
-SCB_CFSR_MMFSR;
+inline volatile uint8_t *
+SCB_CFSR_MMFSR() {
+  return (volatile uint8_t *)0xE000ED28;
+}
 
 bf_reg_funcs(8, SCB_CFSR_BFSR_BFARVALID,   7, 1)
 bf_reg_funcs(8, SCB_CFSR_BFSR_LSPERR,      5, 1)
@@ -187,8 +164,10 @@ bf_reg_funcs(8, SCB_CFSR_BFSR_IMPRECISERR, 2, 1)
 bf_reg_funcs(8, SCB_CFSR_BFSR_PRECISERR,   1, 1)
 bf_reg_funcs(8, SCB_CFSR_BFSR_IBUSERR,     0, 1)
 
-extern volatile uint16_t
-SCB_CFSR_BFSR;
+inline volatile uint8_t *
+SCB_CFSR_BFSR() {
+  return (volatile uint8_t *)0xE000ED29;
+}
 
 bf_reg_funcs(16, SCB_CFSR_UFSR_DIVBYZERO, 9, 1)
 bf_reg_funcs(16, SCB_CFSR_UFSR_UNALIGNED, 8, 1)
@@ -197,15 +176,45 @@ bf_reg_funcs(16, SCB_CFSR_UFSR_INVPC,     2, 1)
 bf_reg_funcs(16, SCB_CFSR_UFSR_INVSTATE,  1, 1)
 bf_reg_funcs(16, SCB_CFSR_UFSR_UNDEFINSTR,0, 1)
 
-extern volatile uint16_t
-SCB_CFSR_UFSR;
+inline volatile uint16_t *
+SCB_CFSR_UFSR() {
+  return (volatile uint16_t *)0xE000ED2A;
+}
 
 bf_reg_funcs(32, SCB_HFSR_DEBUGEVT, 31, 1)
 bf_reg_funcs(32, SCB_HFSR_FORCED,   30, 1)
 bf_reg_funcs(32, SCB_HFSR_VECTTBL,   1, 1)
 
-extern volatile uint32_t
-SCB_HFSR;
+inline volatile uint32_t *
+SCB_HFSR() {
+  return (volatile uint32_t *)0xE000ED2C;
+}
+
+bf_reg_funcs(32, SCB_DFSR_EXTERNAL, 4, 1)
+bf_reg_funcs(32, SCB_DFSR_VCATCH,   3, 1)
+bf_reg_funcs(32, SCB_DFSR_DWTTRAP,  2, 1)
+bf_reg_funcs(32, SCB_DFSR_BKPT,     1, 1)
+bf_reg_funcs(32, SCB_DFSR_HALTED,   0, 1)
+
+inline volatile uint32_t *
+SCB_DFSR() {
+  return (volatile uint32_t *)0xE000ED30;
+}
+
+inline volatile void **
+SCB_MMFAR() {
+  return (volatile void **)0xE000ED34;
+}
+
+inline volatile void **
+SCB_BFAR() {
+  return (volatile void **)0xE000ED38;
+}
+
+inline volatile uint32_t *
+SCB_AFSR() {
+  return (volatile uint32_t *)0xE000ED3C;
+}
 
 enum {
   coprocessor_access_denied     = 0,
@@ -213,25 +222,43 @@ enum {
   coprocessor_access_full       = 3
 };
 
-extern volatile void *
-SCB_MMFAR;
+inline uint32_t
+SCB_CPACR_CP_val_mask() {
+  return bf_val_mask(32, 2);
+}
 
-extern volatile void *
-SCB_BFAR;
+inline uint32_t
+SCB_CPACR_CP_mask(
+    uint8_t n) {
+  return bf_mask(32, 2*n, 2);
+}
 
-bf_reg_funcs(32, SCB_CPACR_CP11, 22, 2)
-bf_reg_funcs(32, SCB_CPACR_CP10, 20, 2)
-bf_reg_funcs(32, SCB_CPACR_CP7,  14, 2)
-bf_reg_funcs(32, SCB_CPACR_CP6,  12, 2)
-bf_reg_funcs(32, SCB_CPACR_CP5,  10, 2)
-bf_reg_funcs(32, SCB_CPACR_CP4,   8, 2)
-bf_reg_funcs(32, SCB_CPACR_CP3,   6, 2)
-bf_reg_funcs(32, SCB_CPACR_CP2,   4, 2)
-bf_reg_funcs(32, SCB_CPACR_CP1,   2, 2)
-bf_reg_funcs(32, SCB_CPACR_CP0,   0, 2)
+inline uint32_t
+SCB_CPACR_CP_val(
+    uint8_t n,
+    uint32_t val) {
+  return bf_cal(32, val, 2*n, 2);
+}
 
-extern volatile uint32_t
-SCB_CPACR;
+inline uint32_t
+SCB_CPACR_CP_get(
+    uint8_t n,
+    uint32_t src) {
+  return bf_get(32, src, 2*n, 2);
+}
+
+inline uint32_t
+SCB_CPACR_CP_set(
+    uint8_t n,
+    uint32_t src,
+    uint32_t val) {
+  return bf_set(32, src, val, 2*n, 2);
+}
+
+inline volatile uint32_t *
+SCB_CPACR() {
+  return (volatile uint32_t *)0xE000ED88;
+}
 
 bf_reg_funcs(32, SCB_FPCCR_ASPEN, 31, 1)
 bf_reg_funcs(32, SCB_FPCCR_LSPEN, 30, 1)
@@ -243,12 +270,15 @@ bf_reg_funcs(32, SCB_FPCCR_THREAD, 3, 1)
 bf_reg_funcs(32, SCB_FPCCR_USER,   1, 1)
 bf_reg_funcs(32, SCB_FPCCR_LSPACT, 0, 1)
 
-extern volatile uint32_t
-SCB_FPCCR;
+inline volatile uint32_t *
+SCB_FPCCR() {
+  return (volatile uint32_t *)0xE000EF34;
+}
 
-
-extern volatile void *
-SCB_FPCAR;
+inline volatile void **
+SCB_FPCAR() {
+  return (volatile void **)0xE000EF38;
+}
 
 enum {
   fp_rounding_nearest        = 0,
@@ -262,14 +292,10 @@ bf_reg_funcs(32, SCB_FPDSCR_DN,    25, 1)
 bf_reg_funcs(32, SCB_FPDSCR_FZ,    24, 1)
 bf_reg_funcs(32, SCB_FPDSCR_RMode, 22, 2)
 
-extern volatile uint32_t
-SCB_FPDSCR;
-
-extern volatile uint32_t
-SCB_ICTR;
-
-extern volatile uint32_t
-SCB_STIR;
+inline volatile uint32_t *
+SCB_FPDSCR() {
+  return (volatile uint32_t *)0xE000EF3C;
+}
 
 bf_reg_funcs(32, SCB_MVFR0_FP_rouning_mode,       28, 4)
 bf_reg_funcs(32, SCB_MVFR0_Short_vectors,         24, 4)
@@ -280,39 +306,71 @@ bf_reg_funcs(32, SCB_MVFR0_Double_precision,       8, 4)
 bf_reg_funcs(32, SCB_MVFR0_Single_precision,       4, 4)
 bf_reg_funcs(32, SCB_MVFR0_A_SIMD_registers,       0, 4)
 
-extern volatile uint32_t
-SCB_MVFR0;
+inline volatile uint32_t *
+SCB_MVFR0() {
+  return (volatile uint32_t *)0xE000EF40;
+}
 
 bf_reg_funcs(32, SCB_MVFR1_FP_fused_MAC, 28, 4)
 bf_reg_funcs(32, SCB_MVFR1_FP_HPFP,      24, 4)
 bf_reg_funcs(32, SCB_MVFR1_D_NaN_mode,    4, 4)
 bf_reg_funcs(32, SCB_MVFR1_FtZ_mode,      0, 4)
 
-extern volatile uint32_t
-SCB_MVFR1;
+inline volatile uint32_t *
+SCB_MVFR1() {
+  return (volatile uint32_t *)0xE000EF44;
+}
+
+inline volatile uint32_t *
+SCB_ICTR() {
+  return (volatile uint32_t *)0xE000E004;
+}
+
+inline volatile uint32_t *
+SCB_STIR() {
+  return (volatile uint32_t *)0xE000EF00;
+}
+
+inline volatile uint32_t *
+SCB_PID(uint8_t n) {
+  return (volatile uint32_t *)(0xE000EFD0 + 4 * ((n & ~4) | (~n & 4)));
+}
+
+inline volatile uint32_t *
+SCB_CID(uint8_t n) {
+  return (volatile uint32_t *)(0xE000EFF0 + 4 * n);
+}
 
 // SysTick Register types
 
-bf_reg_funcs(32, SYSST_SCR_COUNTFLAG, 16, 1)
-bf_reg_funcs(32, SYSST_SCR_CLKSOURCE,  2, 1)
-bf_reg_funcs(32, SYSST_SCR_TICKINT,    1, 1)
-bf_reg_funcs(32, SYSST_SCR_ENABLE,     0, 1)
+bf_reg_funcs(32, SYSST_CSR_COUNTFLAG, 16, 1)
+bf_reg_funcs(32, SYSST_CSR_CLKSOURCE,  2, 1)
+bf_reg_funcs(32, SYSST_CSR_TICKINT,    1, 1)
+bf_reg_funcs(32, SYSST_CSR_ENABLE,     0, 1)
 
-extern volatile uint32_t
-SYSST_SCR;
+inline volatile uint32_t *
+SYST_CSR() {
+  return (volatile uint32_t  *)0xE000E010;
+}
 
-extern volatile uint32_t
-SYST_CVR;
+inline volatile uint32_t *
+SYST_RVR() {
+  return (volatile uint32_t *)0xE000E014;
+}
 
-extern volatile uint32_t
-SYST_CVR;
+inline volatile uint32_t *
+SYST_CVR() {
+  return (volatile uint32_t *)0xE000E018;
+}
 
 bf_reg_funcs(32, SYST_CALIB_NOREF, 31,  1)
 bf_reg_funcs(32, SYST_CALIB_SKEW,  30,  1)
 bf_reg_funcs(32, SYST_CALIB_TENMS,  0, 24)
 
-extern volatile uint32_t
-SYST_CALIB;
+inline volatile uint32_t *
+SYST_CALIB() {
+  return (volatile uint32_t *)0xE000E01C;
+}
 
 // NVIC Registers declaration
 
@@ -340,25 +398,33 @@ bf_reg_funcs(32, MPU_TYPE_IREGION, 16, 8)
 bf_reg_funcs(32, MPU_TYPE_DREGION,  8, 8)
 bf_reg_funcs(32, MPU_TYPE_SEPARATE, 0, 1)
 
-extern const uint32_t
-MPU_TYPE;
+inline volatile uint32_t *
+MPU_TYPE() {
+  return (volatile uint32_t *)0xE000ED90;
+}
 
 bf_reg_funcs(32, MPU_CTRL_PRIVDEFENA, 2, 1)
 bf_reg_funcs(32, MPU_CTRL_HFNMIENA,   1, 1)
 bf_reg_funcs(32, MPU_CTRL_ENABLE,     0, 1)
 
-extern volatile uint32_t
-MPU_CTRL;
+inline volatile uint32_t *
+MPU_CTRL() {
+  return (volatile uint32_t *)0xE000ED94;
+}
 
-extern volatile uint32_t
-MPU_RNR;
+inline volatile uint32_t *
+MPU_RNR() {
+  return (volatile uint32_t *)0xE000ED98;
+}
 
 bf_reg_funcs(32, MPU_RBAR_ADDR,   5, 27)
 bf_reg_funcs(32, MPU_RBAR_VALID,  4,  1)
 bf_reg_funcs(32, MPU_RBAR_REGION, 0,  4)
 
-extern volatile uint32_t
-MPU_RBAR;
+inline volatile uint32_t *
+MPU_RBAR() {
+  return (volatile uint32_t *)0xE000ED9C;
+}
 
 bf_reg_funcs(32, MPU_RASR_XN,    28, 1)
 bf_reg_funcs(32, MPU_RASR_AP,    24, 3)
@@ -370,7 +436,9 @@ bf_reg_funcs(32, MPU_RASR_SRD,    8, 8)
 bf_reg_funcs(32, MPU_RASR_SIZE,   1, 5)
 bf_reg_funcs(32, MPU_RASR_ENABLE, 0, 1)
 
-extern volatile uint32_t
-MPU_RASR;
+inline volatile uint32_t *
+MPU_RASR() {
+  return (volatile uint32_t *)0xE000EDA0;
+}
 
 #endif // _ARMV7M_H

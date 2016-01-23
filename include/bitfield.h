@@ -7,8 +7,8 @@
 #define bf_func_name(bits, name) bf ## bits ## _ ## name
 
 // return bit pattern of 'width' 1's
-#define bf_value_mask(bits, width) \
-  bf_func_name(bits, value_mask)(width)
+#define bf_val_mask(bits, width) \
+  bf_func_name(bits, val_mask)(width)
 
 // return bit pattern of 'width' 1's at bit offset of 'offset'
 #define bf_mask(bits, offset, width) \
@@ -37,8 +37,8 @@
 
 #define bf_reg_funcs(bits, name, width, offset) \
   inline uint ## bits ## _t \
-  name ## _value_mask() { \
-    return bf_value_mask(bits, width); \
+  name ## _val_mask() { \
+    return bf_val_mask(bits, width); \
   } \
   \
   inline uint ## bits ## _t \
