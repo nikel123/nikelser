@@ -35,7 +35,7 @@
 #define bf_type_bits 32
 #include <bitfield_defs.h>
 
-#define bf_reg_funcs(bits, name, width, offset) \
+#define bf_reg_funcs(bits, name, offset, width) \
   inline uint ## bits ## _t \
   name ## _val_mask() { \
     return bf_val_mask(bits, width); \

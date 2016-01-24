@@ -50,7 +50,7 @@ vtable_relocation() {
     *(d++) = *(s++);
   }
 
-  SCB_VTOR = vtable_dst;
+  *SCB_VTOR() = vtable_dst;
 
 }
 

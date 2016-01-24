@@ -90,6 +90,11 @@ SCB_ICSR() {
   return (volatile uint32_t *)0xE000ED04;
 }
 
+inline volatile void **
+SCB_VTOR() {
+  return (volatile void **)0xE000ED08;
+}
+
 bf_reg_funcs(32, SCB_AIRCR_VECTKEY,     16, 16)
 bf_reg_funcs(32, SCB_AIRCR_VECTKEYSTAT, 16, 16)
 bf_reg_funcs(32, SCB_AIRCR_ENDIANNESS,  15,  1)
@@ -237,7 +242,7 @@ inline uint32_t
 SCB_CPACR_CP_val(
     uint8_t n,
     uint32_t val) {
-  return bf_cal(32, val, 2*n, 2);
+  return bf_val(32, val, 2*n, 2);
 }
 
 inline uint32_t

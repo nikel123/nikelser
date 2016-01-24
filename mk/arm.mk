@@ -9,7 +9,7 @@ AR = $(TC)-ar
 OBJCOPY = $(TC)-objcopy
 OBJDUMP = $(TC)-objdump
 
-LDSCRIPT ?= $(TARGET)-target
+LDSCRIPT ?= $(TARGET)
 
 CFLAGS += $(MCU) $(FPU)
 LDFLAGS += \
