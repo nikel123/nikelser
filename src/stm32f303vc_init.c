@@ -60,7 +60,7 @@ Reset_ISR() {
 
   low_level_init();
   cinit();
-  vtable_relocation();
+  //vtable_relocation();
   main();
 
 }

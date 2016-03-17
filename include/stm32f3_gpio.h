@@ -52,29 +52,29 @@ enum {
   }
 
 #define gpio_1bit_funcs(regname) \
-  inline uint16_t \
+  inline uint32_t \
   gpio_ ## regname ## _val_maks() { \
-    return bf16_val_mask(1); \
+    return bf32_val_mask(1); \
   } \
   \
-  inline uint16_t \
+  inline uint32_t \
   gpio_ ## regname ## _mask(uint8_t i) { \
-    return bf16_mask(i, 1); \
+    return bf32_mask(i, 1); \
   } \
   \
-  inline uint16_t \
+  inline uint32_t \
   gpio_ ## regname ## _val(uint8_t val, uint8_t i) { \
-    return bf16_val(val, i, 1); \
+    return bf32_val(val, i, 1); \
   } \
   \
   inline uint8_t \
-  gpio_ ## regname ## _get(uint16_t src, uint8_t i) { \
-    return bf16_get(src, i, 1); \
+  gpio_ ## regname ## _get(uint32_t src, uint8_t i) { \
+    return bf32_get(src, i, 1); \
   } \
   \
-  inline uint16_t \
-  gpio_ ## regname ## _set(uint16_t src, uint8_t val, uint8_t i) { \
-    return bf16_set(src, val, i, 1); \
+  inline uint32_t \
+  gpio_ ## regname ## _set(uint32_t src, uint8_t val, uint8_t i) { \
+    return bf32_set(src, val, i, 1); \
   }
 
 #define gpio_reg_funcs(letter, num) \
@@ -88,7 +88,7 @@ enum {
     return gpio_moder(num); \
   } \
   \
-  inline volatile uint16_t * \
+  inline volatile uint32_t * \
   gpio_ ## letter ## _otyper() { \
     return gpio_otyper(num); \
   } \
@@ -103,17 +103,17 @@ enum {
     return gpio_pupdr(num); \
   } \
   \
-  inline volatile uint16_t * \
+  inline volatile uint32_t * \
   gpio_ ## letter ## _idr() { \
     return gpio_idr(num); \
   } \
   \
-  inline volatile uint16_t * \
+  inline volatile uint32_t * \
   gpio_ ## letter ## _odr() { \
     return gpio_odr(num); \
   } \
   \
-  inline volatile uint16_t * \
+  inline volatile uint32_t * \
   gpio_ ## letter ## _bsrr() { \
     return gpio_bsrr(num) ; \
   } \
@@ -133,7 +133,7 @@ enum {
     return gpio_afrh(num); \
   } \
   \
-  inline volatile uint16_t * \
+  inline volatile uint32_t * \
   gpio_ ## letter ## _brr() { \
     return gpio_brr(num); \
   }
@@ -150,9 +150,9 @@ gpio_moder(uint8_t n) {
 
 gpio_2bit_funcs(moder)
 
-inline volatile uint16_t *
+inline volatile uint32_t *
 gpio_otyper(uint8_t n) {
-  return (volatile uint16_t *)(gpio_base(n) + 0x4);
+  return (volatile uint32_t *)(gpio_base(n) + 0x4);
 }
 
 gpio_1bit_funcs(otyper)
@@ -171,23 +171,23 @@ gpio_pupdr(uint8_t n) {
 
 gpio_2bit_funcs(pupdr)
 
-inline volatile uint16_t *
+inline volatile uint32_t *
 gpio_idr(uint8_t n) {
-  return (volatile uint16_t *)(gpio_base(n) + 0x10);
+  return (volatile uint32_t *)(gpio_base(n) + 0x10);
 }
 
 gpio_1bit_funcs(idr)
 
-inline volatile uint16_t *
+inline volatile uint32_t *
 gpio_odr(uint8_t n) {
-  return (volatile uint16_t *)(gpio_base(n) + 0x14);
+  return (volatile uint32_t *)(gpio_base(n) + 0x14);
 }
 
 gpio_1bit_funcs(odr)
 
-inline volatile uint16_t *
+inline volatile uint32_t *
 gpio_bsrr(uint8_t n) {
-  return (volatile uint16_t *)(gpio_base(n) + 0x18);
+  return (volatile uint32_t *)(gpio_base(n) + 0x18);
 }
 
 gpio_1bit_funcs(bsrr)
@@ -284,9 +284,9 @@ gpio_afrh_set(uint32_t src, uint8_t val, uint8_t i) {
   return bf32_set(src, val, 4*(i-8), 4);
 }
 
-inline volatile uint16_t *
+inline volatile uint32_t *
 gpio_brr(uint8_t n) {
-  return (volatile uint16_t *)(gpio_base(n) + 0x28);
+  return (volatile uint32_t *)(gpio_base(n) + 0x28);
 }
 
 gpio_1bit_funcs(brr)
