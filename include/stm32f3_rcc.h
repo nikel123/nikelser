@@ -12,17 +12,17 @@ RCC_BASE() {
 
 inline volatile uint32_t *
 RCC_REG(size_t offset) {
-  return (volatile uint32_t *)(RCC_BASE + offset);
+  return (volatile uint32_t *)(RCC_BASE() + offset);
 }
 
 inline volatile uint8_t *
 RCC_REG8(size_t offset) {
-  return (volatile uint8_t *)(RCC_BASE + offset);
+  return (volatile uint8_t *)(RCC_BASE() + offset);
 }
 
 inline volatile uint16_t *
 RCC_REG16(size_t offset) {
-  return (volatile uint16_t *)(RCC_BASE + offset);
+  return (volatile uint16_t *)(RCC_BASE() + offset);
 }
 
 bf_reg_funcs(32, RCC_CR_PLLRDY, 25, 1)

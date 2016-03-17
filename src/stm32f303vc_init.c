@@ -1,4 +1,5 @@
 #include <stm32f303vc.h>
+#include "utils.h"
 
 extern void
 main() __attribute__((noreturn));
@@ -11,44 +12,34 @@ low_level_init() {
 static void
 cinit() {
 
-  uint32_t *s;
-  uint32_t *d;
-
   // relocate .text.ccm
-  s = text_ccm_src;
-  d = text_ccm_dst;
-  while(d < text_ccm_end) {
-    *(d++) = *(s++);
-  }
+  memmove32(
+      text_ccm_dst,
+      text_ccm_end,
+      text_ccm_src);
 
   // relocate .data
-  s = data_src;
-  d = data_dst;
-  while(d < data_end) {
-    *(d++) = *(s++);
-  }
+  memmove32(
+      data_dst,
+      data_end,
+      data_src);
 
   // init bss section
-  d = bss_start;
-  while(d < bss_end) {
-    *(d++) = 0;
-  }
-
+  meminit32(
+      bss_start,
+      bss_end,
+      0);
 
 }
 
 static void
 vtable_relocation() {
 
-  register uint32_t *s;
-  register uint32_t *d;
-
   // relocate vector table
-  s = vtable_src;
-  d = vtable_dst;
-  while(d < vtable_end) {
-    *(d++) = *(s++);
-  }
+  memmove32(
+      vtable_dst,
+      vtable_end,
+      vtable_src);
 
   *SCB_VTOR() = vtable_dst;
 
@@ -60,7 +51,7 @@ Reset_ISR() {
 
   low_level_init();
   cinit();
-  //vtable_relocation();
+  vtable_relocation();
   main();
 
 }

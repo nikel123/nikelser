@@ -19,7 +19,7 @@ main.fw: src/main
 	$(OBJCOPY) -O binary $< $@
 
 .PHONY: gdb
-gdb:
+gdb: src/main
 	$(GDB) -x stm32.gdb src/main
 
 .PHONY: flash

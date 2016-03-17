@@ -22,7 +22,14 @@
 int
 main() {
 
-  register volatile int i;
+  int i;
+  volatile register int j;
+
+  *RCC_AHBENR() =
+      RCC_AHBENR_IOPE_val(1)
+    | RCC_AHBENR_SRAM_val(1)
+    | RCC_AHBENR_FLITF_val(1)
+    ;
 
   *gpio_e_moder() =
       gpioinit(gpio_moder_val, GPIO_MODE_OUT);
@@ -37,16 +44,12 @@ main() {
       gpioinit(gpio_pupdr_val, GPIO_PULL_NONE);
 
 
-
   while(1) {
 
-    *gpio_e_odr() = -1;
-
-    //for(i=0; i < 2; ++i);
-
-    *gpio_e_odr() = 0;
-
-    //for(i=0; i < 2; ++i);
+    for(i = 0; i < 7; ++i) {
+      *gpio_e_odr() = 1 << (8 + i);
+      for(j = 0; j < 100000; ++j);
+    }
 
   }
 
