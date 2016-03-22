@@ -379,23 +379,65 @@ SYST_CALIB() {
 
 // NVIC Registers declaration
 
-extern volatile uint32_t
-NVIC_ISER[16];
+inline volatile uint32_t *
+NVIC_ISER() {
+  return (volatile uint32_t *)0xE000E100;
+}
 
-extern volatile uint32_t
-NVIC_ICER[16];
+inline volatile uint32_t *
+NVIC_ICER() {
+  return (volatile uint32_t *)0xE000E180;
+}
 
-extern volatile uint32_t
-NVIC_ISPR[16];
+inline volatile uint32_t *
+NVIC_ISPR() {
+  return (volatile uint32_t *)0xE000E200;
+}
 
-extern volatile uint32_t
-NVIC_ICPR[16];
+inline volatile uint32_t *
+NVIC_ICPR() {
+  return (volatile uint32_t *)0xE000E280;
+}
 
-extern volatile const uint32_t
-NVIC_IABR[16];
+inline volatile const uint32_t *
+NVIC_IABR() {
+  return (volatile uint32_t *)0xE000E300;
+}
 
-extern volatile uint8_t
-NVIC_IPR[496];
+inline volatile uint8_t *
+NVIC_IPR() {
+  return (volatile uint8_t *)0xE000E400;
+}
+
+// enable interrupt
+inline void
+NVIC_enable(uint16_t n) {
+  NVIC_ISER()[n / 32] = 1 << (n % 32);
+}
+
+// disable interrupt
+inline void
+NVIC_disable(uint16_t n) {
+  NVIC_ICER()[n / 32] = 1 << (n % 32);
+}
+
+// set interrupt pending
+inline void
+NVIC_set(uint16_t n) {
+  NVIC_ISPR()[n / 32] = 1 << (n % 32);
+}
+
+// clear interrupt pending
+inline void
+NVIC_clear(uint16_t n) {
+  NVIC_ICPR()[n / 32] = 1 << (n % 32);
+}
+
+// is interrupt active?
+inline int
+NVIC_is_active(uint16_t n) {
+  return (NVIC_IABR()[n / 32] >> (n % 32)) & 1;
+}
 
 // MPU Registers declaration
 

@@ -180,7 +180,7 @@ RCC_CIR_RDYIE() {
 
 inline volatile uint8_t *
 RCC_CIR_RDYC() {
-  return RCC_REG8(0x10);
+  return RCC_REG8(0xA);
 }
 
 bf_reg_funcs(32, RCC_APB2RSTR_TIM20, 20, 1)

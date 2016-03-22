@@ -19,37 +19,64 @@
       f(val, 13) | \
       f(val, 14) | \
       f(val, 15)
+
+volatile int rcc_isr_f = 0;
+
 int
 main() {
 
-  int i;
-  volatile register int j;
+  int i = 1;
+  register volatile int j;
+  uint32_t v;
 
   *RCC_AHBENR() =
-      RCC_AHBENR_IOPE_val(1)
+      RCC_AHBENR_IOPA_val(1)
+    | RCC_AHBENR_IOPE_val(1)
     | RCC_AHBENR_SRAM_val(1)
     | RCC_AHBENR_FLITF_val(1)
     ;
 
+
+  *gpio_a_moder() =
+    gpio_moder_set(*gpio_a_moder(), GPIO_MODE_ALT,  8);
+
+  *gpio_a_ospeedr() =
+    gpio_otyper_set(
+      *gpio_a_ospeedr(),
+      GPIO_OSPEED_HI,
+      8);
+
+  *gpio_a_pupdr() =
+    gpio_pupdr_set(
+      *gpio_a_pupdr(),
+      GPIO_PULL_UP,
+      8);
+
   *gpio_e_moder() =
       gpioinit(gpio_moder_val, GPIO_MODE_OUT);
-
-  *gpio_e_otyper() =
-      gpioinit(gpio_otyper_val, 0);
 
   *gpio_e_ospeedr() =
       gpioinit(gpio_ospeedr_val,GPIO_OSPEED_HI);
 
-  *gpio_e_pupdr() =
-      gpioinit(gpio_pupdr_val, GPIO_PULL_NONE);
-
 
   while(1) {
 
-    for(i = 0; i < 7; ++i) {
-      *gpio_e_odr() = 1 << (8 + i);
-      for(j = 0; j < 100000; ++j);
+    v = 0;
+
+    if ( i ) {
+      i = 0;
+    } else {
+      v |= 1 << 8;
+      i = 1;
     }
+
+    if ( !rcc_isr_f || i ) {
+      v |= 1 << 9;
+    }
+
+    *gpio_e_odr() = v;
+
+    for(j = 0; j < 1000000; ++j);
 
   }
 

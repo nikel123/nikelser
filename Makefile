@@ -14,7 +14,11 @@ all: main.fw
 main: LDFLAGS+= -Wl,-Map=src/main.map
 main: LDSCRIPT = ld/stm32f303vc-target.ld
 
-src/main: src/main.o src/stm32f303vc_vtable.o src/stm32f303vc_init.o
+src/main: \
+  src/main.o \
+  src/stm32f303vc_init.o \
+  src/stm32f303vc_vtable.o
+
 main.fw: src/main
 	$(OBJCOPY) -O binary $< $@
 

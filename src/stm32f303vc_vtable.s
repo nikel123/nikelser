@@ -6,7 +6,6 @@
 .macro def_isr name
   .word \name\()_ISR
   .weak \name\()_ISR
-  .thumb_set \name\()_ISR, 0
 .endm
 
 .section .vtable,"a",%progbits
@@ -18,6 +17,7 @@ vtable:
   .word stack_start
 
   .word Reset_ISR
+  .weak Reset_ISR
 
   .irp i, NMI, HardFault, MemManage, BusFault, UsageFault
     def_isr \i
