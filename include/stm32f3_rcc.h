@@ -2,8 +2,8 @@
 #define _STM32F3_RCC_H
 
 #include <stdint.h>
-#include <bitfield.h>
 #include <stddef.h>
+#include <bitfield.h>
 
 inline void *
 RCC_BASE() {

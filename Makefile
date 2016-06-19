@@ -16,6 +16,7 @@ main: LDSCRIPT = ld/stm32f303vc-target.ld
 
 src/main: \
   src/main.o \
+  src/usb.o \
   src/stm32f303vc_init.o \
   src/stm32f303vc_vtable.o
 
