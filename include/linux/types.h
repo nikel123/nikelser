@@ -3,8 +3,9 @@
 
 #include <stdint.h>
 
-typedef uint8_t __u8;
-typedef int16_t __le16;
-typedef int32_t __le32;
+typedef uint8_t  __u8;
+typedef uint16_t __u16;
+typedef int16_t  __le16;
+typedef int32_t  __le32;
 
 #endif // _LINUX_TYPES_H
